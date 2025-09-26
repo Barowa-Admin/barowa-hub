@@ -10,8 +10,12 @@ WORKDIR /app
 COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
 COPY packages/auth/package*.json ./packages/auth/
+COPY packages/auth/src ./packages/auth/src
+COPY apps/api/src ./apps/api/src
+COPY apps/api/tsconfig.json ./apps/api/
+COPY apps/api/prisma ./apps/api/prisma
 
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # Build stage
 FROM base AS builder
