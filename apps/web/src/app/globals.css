@@ -72,14 +72,14 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply bg-barowa-600 hover:bg-barowa-700 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2 px-4 rounded-lg transition-colors;
   }
   
   .btn-secondary {
-    @apply bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium py-2 px-4 rounded-lg transition-colors;
   }
   
   .input-primary {
-    @apply border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-barowa-500 focus:border-transparent;
+    @apply border border-input rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
   }
 }
