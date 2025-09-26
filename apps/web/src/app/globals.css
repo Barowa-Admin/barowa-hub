@@ -20,19 +20,19 @@
   --primary: 85 68% 17%;
   --primary-foreground: 210 40% 98%;
   /* Secondary/Muted/Border/Input → Barowa Greys */
-  --secondary: 0 0% 87%; /* #DEDEDE */
+  --secondary: 0 0% 87%;
   --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 0 0% 93%; /* #EEEEEE */
+  --muted: 0 0% 93%;
   --muted-foreground: 215.4 16.3% 46.9%;
-  /* Accent → G-Green -20K (#4B602F ≈ hsl(86 34% 28%)) */
+  /* Accent → G-Green -20K */
   --accent: 86 34% 28%;
   --accent-foreground: 210 40% 98%;
-  /* Destructive → Royal Red (#600000 ≈ hsl(0 50% 19%)) */
+  /* Destructive → Royal Red */
   --destructive: 0 50% 19%;
   --destructive-foreground: 210 40% 98%;
-  --border: 0 0% 87%; /* #DEDEDE */
-  --input: 0 0% 87%; /* #DEDEDE */
-  --ring: 85 68% 17%; /* primary */
+  --border: 0 0% 87%;
+  --input: 0 0% 87%;
+  --ring: 85 68% 17%;
   --radius: 0.5rem;
 }
 
@@ -51,7 +51,7 @@
     --popover-foreground: 210 40% 98%;
     --primary: 85 68% 17%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 0 0% 35%; /* #595959 ~ dunkelgrau */
+    --secondary: 0 0% 35%;
     --secondary-foreground: 210 40% 98%;
     --muted: 0 0% 30%;
     --muted-foreground: 215 20.2% 65.1%;
