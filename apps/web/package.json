@@ -10,26 +10,29 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@barowa/auth": "*",
+    "@barowa/ui": "*",
+    "@hookform/resolvers": "^3.3.0",
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.0.0",
     "next": "^14.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.47.0",
-    "@hookform/resolvers": "^3.3.0",
-    "zod": "^3.22.0",
-    "clsx": "^2.0.0",
     "tailwind-merge": "^2.0.0",
-    "@barowa/ui": "*",
-    "@barowa/auth": "*"
+    "zod": "^3.22.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "typescript": "^5.0.0",
-    "tailwindcss": "^3.3.0",
-    "postcss": "^8.4.0",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.0.0",
-    "eslint-config-next": "^14.0.0"
+    "eslint-config-next": "^14.0.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.0.0"
   }
 }

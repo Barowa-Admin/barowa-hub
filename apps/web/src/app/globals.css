@@ -8,6 +8,32 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
+
+  /* shadcn/ui tokens */
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  /* Primary → Barowa G-Green (#314A0E ≈ hsl(85 68% 17%)) */
+  --primary: 85 68% 17%;
+  --primary-foreground: 210 40% 98%;
+  /* Secondary/Muted/Border/Input → Barowa Greys */
+  --secondary: 0 0% 87%; /* #DEDEDE */
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 0 0% 93%; /* #EEEEEE */
+  --muted-foreground: 215.4 16.3% 46.9%;
+  /* Accent → G-Green -20K (#4B602F ≈ hsl(86 34% 28%)) */
+  --accent: 86 34% 28%;
+  --accent-foreground: 210 40% 98%;
+  /* Destructive → Royal Red (#600000 ≈ hsl(0 50% 19%)) */
+  --destructive: 0 50% 19%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 0 0% 87%; /* #DEDEDE */
+  --input: 0 0% 87%; /* #DEDEDE */
+  --ring: 85 68% 17%; /* primary */
+  --radius: 0.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +41,27 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+
+    /* dark theme tokens */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 85 68% 17%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 0 0% 35%; /* #595959 ~ dunkelgrau */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 0 0% 30%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 85 35% 20%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 0 0% 30%;
+    --input: 0 0% 30%;
+    --ring: 85 68% 17%;
   }
 }
 
