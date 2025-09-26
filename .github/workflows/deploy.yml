@@ -12,6 +12,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Test SSH connection
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HETZNER_HOST }}
+        username: root
+        key: ${{ secrets.HETZNER_SSH_KEY }}
+        port: 22
+        script: |
+          echo "🔍 Testing SSH connection..."
+          echo "Server: $(hostname)"
+          echo "Date: $(date)"
+          echo "User: $(whoami)"
+          echo "SSH Key fingerprint: $(ssh-keygen -lf /root/.ssh/authorized_keys 2>/dev/null || echo 'No authorized keys found')"
+          echo "✅ SSH connection successful!"
+      
     - name: Deploy to server
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -20,32 +35,69 @@ jobs:
         key: ${{ secrets.HETZNER_SSH_KEY }}
         port: 22
         script: |
-          # Update system
-          apt update && apt upgrade -y
+          set -e  # Exit on any error
+          
+          echo "🚀 Starting Barowa Hub deployment..."
+          echo "Server: $(hostname)"
+          echo "Date: $(date)"
+          
+          # Update system packages
+          echo "📦 Updating system packages..."
+          apt update -y
+          apt upgrade -y
           
           # Install dependencies if not present
-          apt install -y git docker.io docker-compose
+          echo "🔧 Installing dependencies..."
+          apt install -y git docker.io docker-compose curl
           
-          # Start Docker service
+          # Start and enable Docker service
+          echo "🐳 Setting up Docker..."
           systemctl start docker
           systemctl enable docker
           
+          # Wait for Docker to be ready
+          sleep 5
+          docker --version
+          
           # Clone or update repository
+          echo "📁 Setting up repository..."
           if [ -d "/root/barowa_hub" ]; then
             cd /root/barowa_hub
-            git pull origin main
+            echo "Updating existing repository..."
+            git fetch origin
+            git reset --hard origin/main
           else
             cd /root
+            echo "Cloning new repository..."
             git clone https://github.com/Barowa-Admin/barowa-hub.git
             cd barowa_hub
           fi
           
-          # Deploy with Docker
-          docker-compose down
+          # Show current commit
+          echo "Current commit: $(git log --oneline -1)"
+          
+          # Stop existing containers
+          echo "🛑 Stopping existing containers..."
+          docker-compose down || true
+          
+          # Build and start new containers
+          echo "🔨 Building new containers..."
           docker-compose build --no-cache
+          
+          echo "🚀 Starting containers..."
           docker-compose up -d
           
-          # Cleanup
+          # Wait for containers to be ready
+          echo "⏳ Waiting for containers to start..."
+          sleep 10
+          
+          # Check container status
+          echo "📊 Container status:"
+          docker-compose ps
+          
+          # Cleanup old images
+          echo "🧹 Cleaning up old images..."
           docker system prune -f
           
-          echo "🚀 Barowa Hub deployed successfully!"
+          echo "✅ Barowa Hub deployed successfully!"
+          echo "🌐 Application should be available at: http://${{ secrets.HETZNER_HOST }}"
