@@ -1,0 +1,135 @@
+// Barowa Hub Database Schema
+// Optimiert für digitale Identitäten und dezentrale Services
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Kern-Tabelle: Digitale Identitäten
+model DigitalIdentity {
+  id        String   @id @default(cuid())
+  barowaId  String   @unique @map("barowa_id") // B7K9-M2X4 Format
+  
+  // Auth-Daten
+  passwordHash String @map("password_hash")
+  
+  // Timestamps
+  createdAt    DateTime  @default(now()) @map("created_at")
+  lastLoginAt  DateTime? @map("last_login_at")
+  
+  // Status
+  status AccountStatus @default(ACTIVE)
+  
+  // Bot-Protection
+  deviceFingerprintHash String? @map("device_fingerprint_hash")
+  
+  // Optionale Kontakt-Daten (nur wenn User das will)
+  email String?
+  phone String?
+  
+  // Öffentliches Profil (optional)
+  publicProfile Json? @map("public_profile")
+  
+  // Relationen
+  servers      IdentityServer[]
+  recoveryCodes RecoveryCode[]
+  domains      Domain[]
+  loginLogs    LoginLog[]
+  
+  @@map("digital_identities")
+  @@index([barowaId])
+  @@index([email])
+}
+
+// Server-Zuordnungen
+model IdentityServer {
+  id         String     @id @default(cuid())
+  identityId String     @map("identity_id")
+  serverType ServerType @map("server_type")
+  serverUrl  String     @map("server_url")
+  isPrimary  Boolean    @default(false) @map("is_primary")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  
+  identity DigitalIdentity @relation(fields: [identityId], references: [id], onDelete: Cascade)
+  
+  @@map("identity_servers")
+  @@index([identityId])
+}
+
+// Recovery-Codes für Account-Wiederherstellung
+model RecoveryCode {
+  id         String   @id @default(cuid())
+  identityId String   @map("identity_id")
+  codeHash   String   @map("code_hash")
+  usedAt     DateTime? @map("used_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  
+  identity DigitalIdentity @relation(fields: [identityId], references: [id], onDelete: Cascade)
+  
+  @@map("recovery_codes")
+  @@index([identityId])
+}
+
+// Domain-Verwaltung (Knipp.de Integration)
+model Domain {
+  id              String      @id @default(cuid())
+  identityId      String      @map("identity_id")
+  domainName      String      @map("domain_name")
+  knippDomainId   String?     @map("knipp_domain_id") // ID bei Knipp.de
+  status          DomainStatus @default(PENDING)
+  autoRenew       Boolean     @default(true) @map("auto_renew")
+  expiresAt       DateTime?   @map("expires_at")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  
+  identity DigitalIdentity @relation(fields: [identityId], references: [id], onDelete: Cascade)
+  
+  @@map("domains")
+  @@unique([domainName])
+  @@index([identityId])
+}
+
+// Login-Logs für Security & Analytics
+model LoginLog {
+  id         String   @id @default(cuid())
+  identityId String   @map("identity_id")
+  ipAddress  String   @map("ip_address")
+  userAgent  String   @map("user_agent")
+  success    Boolean
+  createdAt  DateTime @default(now()) @map("created_at")
+  
+  identity DigitalIdentity @relation(fields: [identityId], references: [id], onDelete: Cascade)
+  
+  @@map("login_logs")
+  @@index([identityId, createdAt])
+}
+
+// Enums
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING
+  
+  @@map("account_status")
+}
+
+enum ServerType {
+  HETZNER
+  HOME
+  OTHER
+  
+  @@map("server_type")
+}
+
+enum DomainStatus {
+  PENDING
+  ACTIVE
+  EXPIRED
+  TRANSFERRED
+  
+  @@map("domain_status")
+}

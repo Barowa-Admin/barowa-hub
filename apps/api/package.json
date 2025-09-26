@@ -1,0 +1,38 @@
+{
+  "name": "@barowa/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint . --ext .ts",
+    "type-check": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx src/scripts/seed.ts",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "fastify": "^4.24.0",
+    "@fastify/cors": "^8.4.0",
+    "@fastify/helmet": "^11.1.0",
+    "@fastify/rate-limit": "^9.1.0",
+    "@fastify/swagger": "^8.12.0",
+    "@fastify/swagger-ui": "^2.1.0",
+    "prisma": "^5.6.0",
+    "@prisma/client": "^5.6.0",
+    "jsonwebtoken": "^9.0.0",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.22.0",
+    "@barowa/auth": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/bcryptjs": "^2.4.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0",
+    "eslint": "^8.0.0"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "barowa-hub",
+  "version": "0.1.0",
+  "description": "Barowa Hub - Digitale Identitäten und dezentrale Services",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "test": "turbo test",
+    "clean": "turbo clean",
+    "setup": "npm install && npm run db:setup",
+    "db:setup": "docker-compose up -d postgres redis",
+    "db:migrate": "cd apps/api && npx prisma migrate dev",
+    "db:seed": "cd apps/api && npx prisma db seed"
+  },
+  "devDependencies": {
+    "turbo": "^1.13.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "prettier": "^3.0.0",
+    "eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barowa/barowa-hub.git"
+  },
+  "keywords": [
+    "barowa",
+    "digital-identity",
+    "decentralized",
+    "privacy",
+    "self-hosted"
+  ],
+  "author": "Barowa Team",
+  "license": "MIT"
+}

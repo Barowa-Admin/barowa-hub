@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: barowa-postgres
+    environment:
+      POSTGRES_DB: barowa_hub
+      POSTGRES_USER: barowa
+      POSTGRES_PASSWORD: dev_password_2024
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - barowa-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: barowa-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - barowa-network
+
+  # Mail-Server für Development (MailCatcher)
+  mailcatcher:
+    image: schickling/mailcatcher
+    container_name: barowa-mail
+    ports:
+      - "1080:1080"  # Web Interface
+      - "1025:1025"  # SMTP
+    networks:
+      - barowa-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  barowa-network:
+    driver: bridge
