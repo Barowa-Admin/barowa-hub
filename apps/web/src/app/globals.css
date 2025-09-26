@@ -16,18 +16,18 @@
   --card-foreground: 222.2 84% 4.9%;
   --popover: 0 0% 100%;
   --popover-foreground: 222.2 84% 4.9%;
-  /* Primary → Barowa G-Green (#314A0E ≈ hsl(85 68% 17%)) */
+  /* Primary - Barowa G-Green */
   --primary: 85 68% 17%;
   --primary-foreground: 210 40% 98%;
-  /* Secondary/Muted/Border/Input → Barowa Greys */
+  /* Secondary/Muted/Border/Input - Barowa Greys */
   --secondary: 0 0% 87%;
   --secondary-foreground: 222.2 47.4% 11.2%;
   --muted: 0 0% 93%;
   --muted-foreground: 215.4 16.3% 46.9%;
-  /* Accent → G-Green -20K */
+  /* Accent - G-Green -20K */
   --accent: 86 34% 28%;
   --accent-foreground: 210 40% 98%;
-  /* Destructive → Royal Red */
+  /* Destructive - Royal Red */
   --destructive: 0 50% 19%;
   --destructive-foreground: 210 40% 98%;
   --border: 0 0% 87%;
