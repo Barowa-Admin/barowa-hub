@@ -1,0 +1,51 @@
+name: Deploy to Hetzner Server
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HETZNER_HOST }}
+        username: root
+        key: ${{ secrets.HETZNER_SSH_KEY }}
+        port: 22
+        script: |
+          # Update system
+          apt update && apt upgrade -y
+          
+          # Install dependencies if not present
+          apt install -y git docker.io docker-compose
+          
+          # Start Docker service
+          systemctl start docker
+          systemctl enable docker
+          
+          # Clone or update repository
+          if [ -d "/root/barowa_hub" ]; then
+            cd /root/barowa_hub
+            git pull origin main
+          else
+            cd /root
+            git clone https://github.com/Barowa-Admin/barowa-hub.git
+            cd barowa_hub
+          fi
+          
+          # Deploy with Docker
+          docker-compose down
+          docker-compose build --no-cache
+          docker-compose up -d
+          
+          # Cleanup
+          docker system prune -f
+          
+          echo "🚀 Barowa Hub deployed successfully!"
