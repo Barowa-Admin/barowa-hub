@@ -33,7 +33,9 @@ services:
 
   # API Backend
   api:
-    image: barowa/hub-api:latest
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
     container_name: barowa-api-prod
     restart: unless-stopped
     environment:
@@ -55,7 +57,9 @@ services:
 
   # Web Frontend
   web:
-    image: barowa/hub-web:latest
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
     container_name: barowa-web-prod
     restart: unless-stopped
     environment:
